@@ -1,5 +1,11 @@
 import React from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { getMyContacts, CONTACT_CODE_REACT } from '../helpers/contacts';
+import { scrollElementToBottom } from '../helpers/element';
+import { getContactConversations, getContactConversationsLastMessage } from '../helpers/messages';
 import TheHeader from './components/TheHeader';
+import ContactListItem from './components/ContactListItem';
+import MessageBubble from './components/MessageBubble';
 import FormMessage from './components/FormMessage';
 import storeMessages from '../store/messages';
 
@@ -7,33 +13,44 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeContact: '',
+      activeContact: {},
       messages: [],
     };
-    this.contacts = [
-      {
-        name: 'Vue',
-        code: 'vue',
-      },
-      {
-        name: 'Svelte',
-        code: 'svelte',
-      },
-    ];
+    this.contacts = getMyContacts(CONTACT_CODE_REACT);
 
     this.onClickContact = this.onClickContact.bind(this);
+    this.onClickBack = this.onClickBack.bind(this);
     this.onChangeMessages = this.onChangeMessages.bind(this);
+
+    this.refMessageContainer = React.createRef();
 
     storeMessages.subscribe(this.onChangeMessages);
   }
 
+  getContactConversations(contact) {
+    return getContactConversations(this.state.messages, CONTACT_CODE_REACT, contact.code);
+  }
+
+  getContactConversationsLastMessage(contact) {
+    return getContactConversationsLastMessage(this.state.messages, CONTACT_CODE_REACT, contact.code);
+  }
+
+  onClickBack(e) {
+    e.preventDefault();
+    this.setState({ activeContact: {} });
+  }
+
   onClickContact(e, contact) {
     e.preventDefault();
-    this.setState({ activeContact: contact.code });
+    this.setState({ activeContact: contact });
   }
 
   onChangeMessages() {
-    this.setState({ messages: storeMessages.getState()});
+    this.setState({ messages: storeMessages.getState() });
+  }
+
+  componentDidUpdate() {
+    scrollElementToBottom(this.refMessageContainer.current);
   }
 
   render() {
@@ -41,24 +58,69 @@ export default class App extends React.Component {
       <div className="card">
         <TheHeader />
 
-        <section className="card-content p-0" style={{ minHeight: 500 }}>
+        {
+          this.state.activeContact.code &&
+          <button
+            className="button is-fullwidth level-left"
+            onClick={this.onClickBack}
+          >
+            <span className="icon is-small">
+              <i className="fas fa-chevron-left" />
+            </span>
+            <span>Back</span>
+          </button>
+        }
+
+        <section
+          ref={this.refMessageContainer}
+          className="card-content p-0"
+          style={{
+            minHeight: 500,
+            maxHeight: 500,
+            overflowY: 'auto',
+          }}
+        >
           {
-            this.contacts.map(contact =>
-              <button
-                key={contact.code}
-                className="button button-chat is-fullwidth py-5"
-                onClick={e => this.onClickContact(e, contact)}
-              >
-                {contact.name} ({this.state.messages.filter(message => message.from === contact.code && message.to === 'react').length})
-              </button>
-            )
+            this.state.activeContact.code ?
+              <div className="p-4">
+                <TransitionGroup>
+                  {
+                    this.getContactConversations(this.state.activeContact).map(message =>
+                      <CSSTransition
+                        key={message.time}
+                        timeout={0}
+                        classNames="slide-fade"
+                      >
+                        <MessageBubble
+                          isFromSelf={message.from === CONTACT_CODE_REACT}
+                          title={message.from}
+                          message={message.message}
+                          time={message.time}
+                        />
+                      </CSSTransition>
+                    )
+                  }
+                </TransitionGroup>
+              </div>
+              :
+              this.contacts.map(contact =>
+                <ContactListItem
+                  key={contact.code}
+                  iconClass={contact.iconClass}
+                  name={contact.name}
+                  lastMessage={this.getContactConversationsLastMessage(contact).message || ''}
+                  lastMessageTime={this.getContactConversationsLastMessage(contact).time || null}
+                  lastMessageFromSelf={this.getContactConversationsLastMessage(contact).from === CONTACT_CODE_REACT}
+                  onClick={e => this.onClickContact(e, contact)}
+                />
+              )
           }
         </section>
 
         {
-          this.state.activeContact &&
+          this.state.activeContact.code &&
           <footer className="card-footer p-3">
-            <FormMessage to={this.state.activeContact} />
+            <FormMessage to={this.state.activeContact.code} />
           </footer>
         }
       </div>
