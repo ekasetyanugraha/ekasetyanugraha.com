@@ -1,5 +1,5 @@
 import React from 'react';
-import storeMessages, { ACTION_ADD_MESSAGE } from '../../store/messages';
+import { sendMessage } from '../../store/messages';
 
 export default class FormMessage extends React.Component {
   constructor(props) {
@@ -19,16 +19,13 @@ export default class FormMessage extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
-    storeMessages.dispatch({
-      type: ACTION_ADD_MESSAGE,
-      payload: {
-        from: 'react',
-        to: this.props.to,
-        message: this.state.message,
-      },
-    });
+    if (!this.state.message) return;
 
-    console.log(storeMessages.getState())
+    sendMessage({
+      from: 'react',
+      to: this.props.to,
+      message: this.state.message,
+    });
 
     this.setState({ message: '' });
   }
@@ -44,6 +41,7 @@ export default class FormMessage extends React.Component {
               placeholder="Put your message here.."
               className="input is-rounded"
               type="text"
+              autoFocus
             />
           </div>
           <div className="control">

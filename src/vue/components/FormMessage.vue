@@ -7,6 +7,7 @@
           placeholder="Put your message here.."
           class="input is-rounded"
           type="text"
+          autofocus
         >
       </div>
       <div class="control">
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import storeMessages, { ACTION_ADD_MESSAGE } from '../../store/messages';
+import { sendMessage } from '../../store/messages';
 
 export default {
   props: {
@@ -35,13 +36,12 @@ export default {
   }),
   methods: {
     onSubmit() {
-      storeMessages.dispatch({
-        type: ACTION_ADD_MESSAGE,
-        payload: {
-          from: 'vue',
-          to: this.to,
-          message: this.message,
-        },
+      if (!this.message) return;
+
+      sendMessage({
+        from: 'vue',
+        to: this.to,
+        message: this.message,
       });
 
       this.message = '';
