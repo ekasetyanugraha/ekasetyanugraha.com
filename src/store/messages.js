@@ -13,4 +13,19 @@ const messages = (state = [], action) => {
   }
 };
 
-export default createStore(messages);
+const store = createStore(messages);
+
+/**
+ * Component Interfaces
+ */
+export const sendMessage = payload => {
+  store.dispatch({
+    type: ACTION_ADD_MESSAGE,
+    payload: {
+      ...payload,
+      time: new Date().getTime(),
+    },
+  });
+};
+
+export default store;
