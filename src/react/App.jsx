@@ -4,7 +4,7 @@ import { getMyContacts, CONTACT_CODE_REACT } from '../helpers/contacts';
 import { scrollElementToBottom } from '../helpers/element';
 import { getContactConversations, getContactConversationsLastMessage } from '../helpers/messages';
 import TheHeader from './components/TheHeader';
-import ContactListItem from './components/ContactListItem';
+import ContactList from './components/ContactList';
 import MessageBubble from './components/MessageBubble';
 import FormMessage from './components/FormMessage';
 import storeMessages from '../store/messages';
@@ -40,8 +40,7 @@ export default class App extends React.Component {
     this.setState({ activeContact: {} });
   }
 
-  onClickContact(e, contact) {
-    e.preventDefault();
+  onClickContact(contact) {
     this.setState({ activeContact: contact });
   }
 
@@ -103,17 +102,10 @@ export default class App extends React.Component {
                 </TransitionGroup>
               </div>
               :
-              this.contacts.map(contact =>
-                <ContactListItem
-                  key={contact.code}
-                  iconClass={contact.iconClass}
-                  name={contact.name}
-                  lastMessage={this.getContactConversationsLastMessage(contact).message || ''}
-                  lastMessageTime={this.getContactConversationsLastMessage(contact).time || null}
-                  lastMessageFromSelf={this.getContactConversationsLastMessage(contact).from === CONTACT_CODE_REACT}
-                  onClick={e => this.onClickContact(e, contact)}
-                />
-              )
+              <ContactList
+                messages={this.state.messages}
+                onClick={this.onClickContact}
+              />
           }
         </section>
 
