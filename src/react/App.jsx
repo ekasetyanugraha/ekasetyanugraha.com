@@ -1,7 +1,5 @@
 import React from 'react';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
-import { getMyContacts, CONTACT_CODE_REACT } from '../helpers/contacts';
-import { getContactConversations, getContactConversationsLastMessage } from '../helpers/messages';
 import TheHeader from './components/TheHeader';
 import ContactList from './components/ContactList';
 import ConversationWrapper from './components/ConversationWrapper';
@@ -15,7 +13,6 @@ export default class App extends React.Component {
       activeContact: {},
       messages: [],
     };
-    this.contacts = getMyContacts(CONTACT_CODE_REACT);
 
     this.onClickContact = this.onClickContact.bind(this);
     this.onClickBack = this.onClickBack.bind(this);
@@ -24,21 +21,12 @@ export default class App extends React.Component {
     storeMessages.subscribe(this.onChangeMessages);
   }
 
-  getContactConversations(contact) {
-    return getContactConversations(this.state.messages, CONTACT_CODE_REACT, contact.code);
-  }
-
-  getContactConversationsLastMessage(contact) {
-    return getContactConversationsLastMessage(this.state.messages, CONTACT_CODE_REACT, contact.code);
-  }
-
-  onClickBack(e) {
-    e.preventDefault();
-    this.setState({ activeContact: {} });
-  }
-
   onClickContact(contact) {
     this.setState({ activeContact: contact });
+  }
+
+  onClickBack() {
+    this.setState({ activeContact: {} });
   }
 
   onChangeMessages() {
@@ -48,7 +36,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="card">
-        <TheHeader />
+        <TheHeader
+          activeContact={this.state.activeContact}
+          onClickBack={this.onClickBack}
+        />
 
         <section
           className="card-content p-0"
