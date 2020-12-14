@@ -33,7 +33,7 @@ export default class ContactListItem extends React.Component {
                 </span>
               }
             </div>
-            <div className="has-text-grey-light">
+            <div className="has-text-grey-light is-text-ellipsis">
               { this.props.lastMessageFromSelf && <span>You: </span> }{ this.props.lastMessage }
             </div>
           </div>

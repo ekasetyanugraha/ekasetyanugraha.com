@@ -21,6 +21,7 @@
         :class="{
           'has-text-white': isFromSelf,
         }"
+        style="word-break: break-word;"
       >
         {{ message }}
       </div>

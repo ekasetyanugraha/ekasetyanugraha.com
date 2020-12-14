@@ -26,6 +26,9 @@ export default class MessageBubble extends React.Component {
           }
           <div
             className={this.props.isFromSelf ? 'has-text-white' : ''}
+            style={{
+              wordBreak: 'break-word',
+            }}
           >
             { this.props.message }
           </div>
