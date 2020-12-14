@@ -1,0 +1,9 @@
+.is-text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  word-break: break-all;
+  white-space: nowrap;
+  width: 0;
+  min-width: 100%;
+}
