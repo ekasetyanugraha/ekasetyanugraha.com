@@ -7,7 +7,7 @@
 
     <section
       class="card-content p-0"
-      style="min-height: 500px; overflow-y: hidden; overflow-x: hidden;"
+      style="min-height: 500px; overflow: hidden;"
     >
       <transition
         name="slide-fade-horizontal"
