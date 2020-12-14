@@ -2,7 +2,7 @@
   <div class="p-4 is-clickable" style="border-bottom: 1px solid hsl(0, 0%, 86%);">
     <div class="media">
       <div class="media-left">
-        <figure class="image is-48x48">
+        <figure class="image is-32x32">
           <img :src="contact.img" class="is-rounded">
         </figure>
       </div>
