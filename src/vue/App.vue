@@ -40,8 +40,8 @@
 import storeMessages from '../store/messages';
 import TheHeader from './components/TheHeader';
 import ContactList from './components/ContactList';
-const ConversationWrapper = () => import(/** webpackChunkName: component-vue-ConversationWrapper */ './components/ConversationWrapper');
-const FormMessage = () => import(/** webpackChunkName: component-vue-FormMessage */ './components/FormMessage');
+const ConversationWrapper = () => import(/* webpackChunkName: "component-vue-ConversationWrapper" */ './components/ConversationWrapper');
+const FormMessage = () => import(/* webpackChunkName: "component-vue-FormMessage" */ './components/FormMessage');
 
 export default {
   components: {
