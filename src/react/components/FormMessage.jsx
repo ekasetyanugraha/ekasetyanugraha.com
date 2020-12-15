@@ -1,4 +1,5 @@
 import React from 'react';
+import { CONTACT_CODE_REACT } from '../../helpers/contacts';
 import { sendMessage } from '../../store/messages';
 
 export default class FormMessage extends React.Component {
@@ -22,7 +23,7 @@ export default class FormMessage extends React.Component {
     if (!this.state.message) return;
 
     sendMessage({
-      from: 'react',
+      from: CONTACT_CODE_REACT,
       to: this.props.to,
       message: this.state.message,
     });
