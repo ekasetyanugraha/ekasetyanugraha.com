@@ -1,11 +1,29 @@
 <script>
+import { CONTACT_CODE_SVELTE } from '../../helpers/contacts';
+import { sendMessage } from '../../store/messages';
 
+export let to = {};
+
+let message = '';
+
+const onSubmitForm = () => {
+  if (!message) return;
+
+  sendMessage({
+    from: CONTACT_CODE_SVELTE,
+    to,
+    message,
+  });
+
+  message = '';
+};
 </script>
 
-<form class="is-flex-grow-1">
+<form on:submit|preventDefault={onSubmitForm} class="is-flex-grow-1">
   <div class="field has-addons">
     <div class="control is-expanded">
       <input
+        bind:value={message}
         placeholder="Put your message here.."
         class="input is-rounded"
         type="text"
