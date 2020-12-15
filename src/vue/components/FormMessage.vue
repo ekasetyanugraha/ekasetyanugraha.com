@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { CONTACT_CODE_VUE } from '../../helpers/contacts';
 import { sendMessage } from '../../store/messages';
 
 export default {
@@ -39,7 +40,7 @@ export default {
       if (!this.message) return;
 
       sendMessage({
-        from: 'vue',
+        from: CONTACT_CODE_VUE,
         to: this.to,
         message: this.message,
       });
