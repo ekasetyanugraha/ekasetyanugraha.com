@@ -1,5 +1,6 @@
 <script>
 import { afterUpdate } from 'svelte';
+import { fly } from 'svelte/transition';
 import { CONTACT_CODE_SVELTE } from '../../helpers/contacts';
 import { getContactConversations } from '../../helpers/messages';
 import { scrollElementToBottom } from '../../helpers/element';
@@ -31,12 +32,14 @@ $: conversations = getContactConversations(messages, CONTACT_CODE_SVELTE, to);
     </div>
   {:else}
     {#each conversations as conversation}
-      <MessageBubble
-        isFromSelf={conversation.from === CONTACT_CODE_SVELTE}
-        title={conversation.from}
-        message={conversation.message}
-        time={conversation.time}
-      />
+      <div in:fly={{ duration: 200, y: 10 }}>
+        <MessageBubble
+          isFromSelf={conversation.from === CONTACT_CODE_SVELTE}
+          title={conversation.from}
+          message={conversation.message}
+          time={conversation.time}
+        />
+      </div>
     {/each}
   {/if}
 </div>

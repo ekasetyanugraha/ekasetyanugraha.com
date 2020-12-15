@@ -1,4 +1,5 @@
 <script>
+import { fade } from 'svelte/transition';
 import storeMessages from '../store/messages';
 import TheHeader from './components/TheHeader.svelte';
 import ContactList from './components/ContactList.svelte';
@@ -34,9 +35,13 @@ storeMessages.subscribe(onChangeMessages);
     style="min-height: 500px; overflow: hidden;"
   >
     {#if !activeContact.code}
-      <ContactList {messages} on:click={onClickContact} />
+      <div in:fade={{ duration: 200 }}>
+        <ContactList {messages} on:click={onClickContact} />
+      </div>
     {:else}
-      <ConversationWrapper to={activeContact.code} {messages} />
+      <div in:fade={{ duration: 200 }}>
+        <ConversationWrapper to={activeContact.code} {messages} />
+      </div>
     {/if}
   </section>
 
