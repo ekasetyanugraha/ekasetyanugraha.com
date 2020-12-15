@@ -27,6 +27,7 @@ const onSubmitForm = () => {
         placeholder="Put your message here.."
         class="input is-rounded"
         type="text"
+        autofocus
       />
     </div>
     <div class="control">
