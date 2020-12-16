@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import { getMessages } from '../api/messages';
 
 export const ACTION_ADD_MESSAGE = 'ADD_MESSAGE';
 
@@ -23,9 +24,13 @@ export const sendMessage = payload => {
     type: ACTION_ADD_MESSAGE,
     payload: {
       ...payload,
-      time: new Date().getTime(),
+      time: payload.time || new Date().getTime(),
     },
   });
 };
+
+getMessages().then(response => {
+  response.data.forEach(sendMessage);
+});
 
 export default store;
