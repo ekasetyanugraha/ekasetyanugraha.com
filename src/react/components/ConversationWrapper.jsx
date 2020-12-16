@@ -48,7 +48,7 @@ export default class ConversationWrapper extends React.Component {
                     <MessageBubble
                       isFromSelf={conversation.from === CONTACT_CODE_REACT}
                       title={conversation.from}
-                      message={conversation.message}
+                      message={conversation.content}
                       time={conversation.time}
                     />
                   </CSSTransition>

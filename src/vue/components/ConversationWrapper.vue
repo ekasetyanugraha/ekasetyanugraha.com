@@ -20,7 +20,7 @@
           :key="conversation.time"
           :is-from-self="conversation.from === CONTACT_CODE_VUE"
           :title="conversation.from"
-          :message="conversation.message"
+          :message="conversation.content"
           :time="conversation.time"
         />
       </transition-group>

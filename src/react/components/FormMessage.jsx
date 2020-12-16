@@ -25,7 +25,7 @@ export default class FormMessage extends React.Component {
     sendMessage({
       from: CONTACT_CODE_REACT,
       to: this.props.to,
-      message: this.state.message,
+      content: this.state.message,
     });
 
     this.setState({ message: '' });

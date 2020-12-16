@@ -42,7 +42,7 @@ export default {
       sendMessage({
         from: CONTACT_CODE_VUE,
         to: this.to,
-        message: this.message,
+        content: this.message,
       });
 
       this.message = '';

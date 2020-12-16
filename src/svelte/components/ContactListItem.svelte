@@ -10,7 +10,7 @@ export let messages = [];
 const dispatch = createEventDispatcher();
 
 $: lastConversation = getContactConversationsLastMessage(messages, CONTACT_CODE_SVELTE, contact.code);
-$: lastMessage = lastConversation.message || '';
+$: lastMessage = lastConversation.content || '';
 $: lastMessageTime = lastConversation.time;
 $: lastMessageFromSelf = lastConversation.from === CONTACT_CODE_SVELTE;
 </script>

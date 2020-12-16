@@ -36,7 +36,7 @@ $: conversations = getContactConversations(messages, CONTACT_CODE_SVELTE, to);
         <MessageBubble
           isFromSelf={conversation.from === CONTACT_CODE_SVELTE}
           title={conversation.from}
-          message={conversation.message}
+          message={conversation.content}
           time={conversation.time}
         />
       </div>

@@ -12,7 +12,7 @@ const onSubmitForm = () => {
   sendMessage({
     from: CONTACT_CODE_SVELTE,
     to,
-    message,
+    content: message,
   });
 
   message = '';

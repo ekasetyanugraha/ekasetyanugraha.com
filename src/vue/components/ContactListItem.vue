@@ -48,7 +48,7 @@ export default {
       return getContactConversationsLastMessage(this.messages, CONTACT_CODE_VUE, this.contact.code);
     },
     lastMessage() {
-      return this.lastConversation.message;
+      return this.lastConversation.content;
     },
     lastMessageTime() {
       return this.lastConversation.time;

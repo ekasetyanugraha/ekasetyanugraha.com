@@ -13,7 +13,7 @@ export default class ContactListItem extends React.Component {
   }
 
   get lastMessage() {
-    return this.lastConversation.message;
+    return this.lastConversation.content;
   }
 
   get lastMessageTime() {
